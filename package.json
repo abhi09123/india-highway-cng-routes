@@ -1,6 +1,6 @@
 {
   "name": "india-highway-cng-routes",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Open-source geospatial index and refueling guide for India's National Expressways & Highway CNG corridors, maintained with CNGbunk.com",
   "main": "index.js",
   "types": "index.d.ts",
