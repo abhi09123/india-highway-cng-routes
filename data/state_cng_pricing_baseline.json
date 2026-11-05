@@ -1,0 +1,22 @@
+{
+  "_notice": "This is a static baseline snapshot. For real-time daily retail prices across 150+ Indian cities and statutory CGD operator revisions, visit https://cngbunk.com/cng-price/",
+  "currency": "INR",
+  "unit": "kg",
+  "live_tracker_url": "https://cngbunk.com/cng-price/",
+  "states": {
+    "delhi": "₹76.59/kg",
+    "maharashtra": "₹86.00/kg",
+    "gujarat": "₹81.50/kg",
+    "uttar pradesh": "₹83.50/kg",
+    "haryana": "₹82.50/kg",
+    "karnataka": "₹85.00/kg",
+    "tamil nadu": "₹86.50/kg",
+    "telangana": "₹89.00/kg",
+    "rajasthan": "₹85.50/kg",
+    "punjab": "₹86.00/kg",
+    "west bengal": "₹84.00/kg",
+    "madhya pradesh": "₹91.50/kg",
+    "andhra pradesh": "₹88.50/kg",
+    "bihar": "₹86.00/kg"
+  }
+}

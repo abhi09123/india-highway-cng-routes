@@ -1,0 +1,344 @@
+[
+  {
+    "slug": "yamuna-expressway",
+    "highway": "Yamuna Expressway",
+    "from": "Greater Noida",
+    "to": "Agra",
+    "distance_km": 175.2,
+    "toll_plazas_count": 0,
+    "interactive_map_url": "https://cngbunk.com/routes/yamuna-expressway/"
+  },
+  {
+    "slug": "mumbai-pune-expressway",
+    "highway": "Mumbai–Pune Expressway",
+    "from": "Mumbai",
+    "to": "Pune",
+    "distance_km": 120.5,
+    "toll_plazas_count": 0,
+    "interactive_map_url": "https://cngbunk.com/routes/mumbai-pune-expressway/"
+  },
+  {
+    "slug": "delhi-mumbai-expressway",
+    "highway": "Delhi–Mumbai Expressway (NE-4)",
+    "from": "Delhi (Sohna)",
+    "to": "Jaipur (Dausa)",
+    "distance_km": 244.5,
+    "toll_plazas_count": 0,
+    "interactive_map_url": "https://cngbunk.com/routes/delhi-mumbai-expressway/"
+  },
+  {
+    "slug": "ganga-expressway",
+    "highway": "Ganga Expressway",
+    "from": "Meerut",
+    "to": "Prayagraj",
+    "distance_km": 638.4,
+    "toll_plazas_count": 0,
+    "interactive_map_url": "https://cngbunk.com/routes/ganga-expressway/"
+  },
+  {
+    "slug": "dwarka-expressway",
+    "highway": "Dwarka Expressway (NH 248-BB)",
+    "from": "Delhi (Dwarka)",
+    "to": "Gurugram",
+    "distance_km": 31.9,
+    "toll_plazas_count": 0,
+    "interactive_map_url": "https://cngbunk.com/routes/dwarka-expressway/"
+  },
+  {
+    "slug": "delhi-meerut-expressway",
+    "highway": "Delhi–Meerut Expressway (NE-3)",
+    "from": "Delhi (Ghazipur)",
+    "to": "Meerut",
+    "distance_km": 66,
+    "toll_plazas_count": 0,
+    "interactive_map_url": "https://cngbunk.com/routes/delhi-meerut-expressway/"
+  },
+  {
+    "slug": "agra-lucknow-expressway",
+    "highway": "Agra–Lucknow Expressway",
+    "from": "Agra",
+    "to": "Lucknow",
+    "distance_km": 333.1,
+    "toll_plazas_count": 0,
+    "interactive_map_url": "https://cngbunk.com/routes/agra-lucknow-expressway/"
+  },
+  {
+    "slug": "purvanchal-expressway",
+    "highway": "Purvanchal Expressway",
+    "from": "Lucknow",
+    "to": "Ghazipur",
+    "distance_km": 258.3,
+    "toll_plazas_count": 0,
+    "interactive_map_url": "https://cngbunk.com/routes/purvanchal-expressway/"
+  },
+  {
+    "slug": "samruddhi-mahamarg",
+    "highway": "Samruddhi Mahamarg",
+    "from": "Mumbai (Thane)",
+    "to": "Nagpur",
+    "distance_km": 756.2,
+    "toll_plazas_count": 6,
+    "interactive_map_url": "https://cngbunk.com/routes/samruddhi-mahamarg/"
+  },
+  {
+    "slug": "atal-setu-mthl",
+    "highway": "Atal Setu (MTHL)",
+    "from": "Mumbai (Sewri)",
+    "to": "Navi Mumbai (Chirle)",
+    "distance_km": 26.3,
+    "toll_plazas_count": 0,
+    "interactive_map_url": "https://cngbunk.com/routes/atal-setu-mthl/"
+  },
+  {
+    "slug": "lucknow-kanpur-expressway",
+    "highway": "Lucknow–Kanpur Expressway (NE-6)",
+    "from": "Lucknow",
+    "to": "Kanpur",
+    "distance_km": 105.4,
+    "toll_plazas_count": 0,
+    "interactive_map_url": "https://cngbunk.com/routes/lucknow-kanpur-expressway/"
+  },
+  {
+    "slug": "ahmedabad-dholera-expressway",
+    "highway": "Ahmedabad–Dholera Expressway",
+    "from": "Ahmedabad",
+    "to": "Dholera SIR",
+    "distance_km": 99.5,
+    "toll_plazas_count": 0,
+    "interactive_map_url": "https://cngbunk.com/routes/ahmedabad-dholera-expressway/"
+  },
+  {
+    "slug": "delhi-jaipur-nh48",
+    "highway": "NH 48",
+    "from": "Delhi",
+    "to": "Jaipur",
+    "distance_km": 281.8,
+    "toll_plazas_count": 0,
+    "interactive_map_url": "https://cngbunk.com/routes/delhi-jaipur-nh48/"
+  },
+  {
+    "slug": "ahmedabad-vadodara-ne1",
+    "highway": "NE 1",
+    "from": "Ahmedabad",
+    "to": "Vadodara",
+    "distance_km": 116.8,
+    "toll_plazas_count": 0,
+    "interactive_map_url": "https://cngbunk.com/routes/ahmedabad-vadodara-ne1/"
+  },
+  {
+    "slug": "mumbai-nashik-nh160",
+    "highway": "NH 160",
+    "from": "Mumbai",
+    "to": "Nashik",
+    "distance_km": 159.9,
+    "toll_plazas_count": 0,
+    "interactive_map_url": "https://cngbunk.com/routes/mumbai-nashik-nh160/"
+  },
+  {
+    "slug": "pune-nashik-nh60",
+    "highway": "NH 60",
+    "from": "Pune",
+    "to": "Nashik",
+    "distance_km": 211.2,
+    "toll_plazas_count": 0,
+    "interactive_map_url": "https://cngbunk.com/routes/pune-nashik-nh60/"
+  },
+  {
+    "slug": "pune-kolhapur-nh48",
+    "highway": "NH 48",
+    "from": "Pune",
+    "to": "Kolhapur",
+    "distance_km": 234.6,
+    "toll_plazas_count": 0,
+    "interactive_map_url": "https://cngbunk.com/routes/pune-kolhapur-nh48/"
+  },
+  {
+    "slug": "bengaluru-hyderabad-nh44",
+    "highway": "NH 44",
+    "from": "Bengaluru",
+    "to": "Hyderabad",
+    "distance_km": 566.3,
+    "toll_plazas_count": 0,
+    "interactive_map_url": "https://cngbunk.com/routes/bengaluru-hyderabad-nh44/"
+  },
+  {
+    "slug": "ahmedabad-rajkot-nh47",
+    "highway": "NH 47",
+    "from": "Ahmedabad",
+    "to": "Rajkot",
+    "distance_km": 216.2,
+    "toll_plazas_count": 0,
+    "interactive_map_url": "https://cngbunk.com/routes/ahmedabad-rajkot-nh47/"
+  },
+  {
+    "slug": "delhi-dehradun-expressway",
+    "highway": "Delhi–Dehradun Expressway",
+    "from": "Delhi",
+    "to": "Dehradun",
+    "distance_km": 233,
+    "toll_plazas_count": 4,
+    "interactive_map_url": "https://cngbunk.com/routes/delhi-dehradun-expressway/"
+  },
+  {
+    "slug": "bundelkhand-expressway",
+    "highway": "Bundelkhand Expressway",
+    "from": "Chitrakoot",
+    "to": "Etawah",
+    "distance_km": 296,
+    "toll_plazas_count": 3,
+    "interactive_map_url": "https://cngbunk.com/routes/bundelkhand-expressway/"
+  },
+  {
+    "slug": "mumbai-goa-nh66",
+    "highway": "NH 66 (Mumbai to Goa)",
+    "from": "Mumbai (Panvel)",
+    "to": "Goa (Panaji)",
+    "distance_km": 506,
+    "toll_plazas_count": 4,
+    "interactive_map_url": "https://cngbunk.com/routes/mumbai-goa-nh66/"
+  },
+  {
+    "slug": "bengaluru-mysuru-expressway",
+    "highway": "Bengaluru–Mysuru Expressway (NH 275)",
+    "from": "Bengaluru",
+    "to": "Mysuru",
+    "distance_km": 142,
+    "toll_plazas_count": 2,
+    "interactive_map_url": "https://cngbunk.com/routes/bengaluru-mysuru-expressway/"
+  },
+  {
+    "slug": "delhi-chandigarh-nh44",
+    "highway": "NH 44 (Delhi to Chandigarh)",
+    "from": "Delhi",
+    "to": "Chandigarh",
+    "distance_km": 243,
+    "toll_plazas_count": 4,
+    "interactive_map_url": "https://cngbunk.com/routes/delhi-chandigarh-nh44/"
+  },
+  {
+    "slug": "chennai-bengaluru-expressway",
+    "highway": "Chennai–Bengaluru Expressway (NE-7 & NH 48)",
+    "from": "Chennai",
+    "to": "Bengaluru",
+    "distance_km": 327,
+    "toll_plazas_count": 6,
+    "interactive_map_url": "https://cngbunk.com/routes/chennai-bengaluru-expressway/"
+  },
+  {
+    "slug": "mumbai-ahmedabad-nh48",
+    "highway": "NH 48 (Mumbai to Ahmedabad)",
+    "from": "Mumbai",
+    "to": "Ahmedabad",
+    "distance_km": 502,
+    "toll_plazas_count": 7,
+    "interactive_map_url": "https://cngbunk.com/routes/mumbai-ahmedabad-nh48/"
+  },
+  {
+    "slug": "trans-haryana-nh152d",
+    "highway": "Trans-Haryana Expressway (NH 152D)",
+    "from": "Ambala (Gangheri)",
+    "to": "Narnaul (Kotputli Link)",
+    "distance_km": 227,
+    "toll_plazas_count": 4,
+    "interactive_map_url": "https://cngbunk.com/routes/trans-haryana-nh152d/"
+  },
+  {
+    "slug": "mumbai-coastal-road",
+    "highway": "Mumbai Coastal Road (Dharmveer Swarajya Rakshak Marg)",
+    "from": "Marine Drive (Princess Street)",
+    "to": "Worli (Bandra-Worli Sea Link)",
+    "distance_km": 10.5,
+    "toll_plazas_count": 0,
+    "interactive_map_url": "https://cngbunk.com/routes/mumbai-coastal-road/"
+  },
+  {
+    "slug": "shaktipeeth-expressway",
+    "highway": "Nagpur–Goa Shaktipeeth Expressway",
+    "from": "Pavnar (Wardha / Nagpur)",
+    "to": "Patradevi (Sindhudurg / Goa)",
+    "distance_km": 802,
+    "toll_plazas_count": 4,
+    "interactive_map_url": "https://cngbunk.com/routes/shaktipeeth-expressway/"
+  },
+  {
+    "slug": "hyderabad-vijayawada-nh65",
+    "highway": "Hyderabad–Vijayawada Highway (NH 65)",
+    "from": "Hyderabad (LB Nagar)",
+    "to": "Vijayawada (Benz Circle)",
+    "distance_km": 275,
+    "toll_plazas_count": 3,
+    "interactive_map_url": "https://cngbunk.com/routes/hyderabad-vijayawada-nh65/"
+  },
+  {
+    "slug": "western-peripheral-expressway",
+    "highway": "Western Peripheral Expressway (KMP)",
+    "from": "Kundli (Sonipat)",
+    "to": "Palwal (Faridabad Link)",
+    "distance_km": 135.6,
+    "toll_plazas_count": 4,
+    "interactive_map_url": "https://cngbunk.com/routes/western-peripheral-expressway/"
+  },
+  {
+    "slug": "eastern-peripheral-expressway",
+    "highway": "Eastern Peripheral Expressway (KGP / NE-2)",
+    "from": "Kundli (Sonipat)",
+    "to": "Palwal (Faridabad Link)",
+    "distance_km": 135,
+    "toll_plazas_count": 4,
+    "interactive_map_url": "https://cngbunk.com/routes/eastern-peripheral-expressway/"
+  },
+  {
+    "slug": "delhi-amritsar-katra-expressway",
+    "highway": "Delhi–Amritsar–Katra Expressway (NE-5)",
+    "from": "Delhi (Bahadurgarh Link)",
+    "to": "Katra (Vaishno Devi)",
+    "distance_km": 670,
+    "toll_plazas_count": 6,
+    "interactive_map_url": "https://cngbunk.com/routes/delhi-amritsar-katra-expressway/"
+  },
+  {
+    "slug": "noida-greater-noida-expressway",
+    "highway": "Noida–Greater Noida Expressway",
+    "from": "Noida (Sector 14A / Mahamaya)",
+    "to": "Greater Noida (Pari Chowk)",
+    "distance_km": 24.5,
+    "toll_plazas_count": 0,
+    "interactive_map_url": "https://cngbunk.com/routes/noida-greater-noida-expressway/"
+  },
+  {
+    "slug": "chennai-puducherry-ecr",
+    "highway": "East Coast Road (ECR / NH 332A)",
+    "from": "Chennai (Akkarai)",
+    "to": "Puducherry (White Town)",
+    "distance_km": 150,
+    "toll_plazas_count": 2,
+    "interactive_map_url": "https://cngbunk.com/routes/chennai-puducherry-ecr/"
+  },
+  {
+    "slug": "hyderabad-warangal-nh163",
+    "highway": "Hyderabad–Warangal Highway (NH 163)",
+    "from": "Hyderabad (Uppal)",
+    "to": "Warangal (Kazipet Link)",
+    "distance_km": 145,
+    "toll_plazas_count": 2,
+    "interactive_map_url": "https://cngbunk.com/routes/hyderabad-warangal-nh163/"
+  },
+  {
+    "slug": "pune-solapur-nh65",
+    "highway": "Pune–Solapur Highway (NH 65)",
+    "from": "Pune",
+    "to": "Solapur",
+    "distance_km": 253.3,
+    "toll_plazas_count": 3,
+    "interactive_map_url": "https://cngbunk.com/routes/pune-solapur-nh65/"
+  },
+  {
+    "slug": "porbandar-dwarka-nh51",
+    "highway": "Porbandar–Dwarka Highway (NH 51)",
+    "from": "Porbandar",
+    "to": "Dwarka",
+    "distance_km": 102.1,
+    "toll_plazas_count": 1,
+    "interactive_map_url": "https://cngbunk.com/routes/porbandar-dwarka-nh51/"
+  }
+]
