@@ -72,7 +72,7 @@ This repository provides open metadata for developers, researchers, and road tri
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/india-highway-cng-routes.git
+git clone https://github.com/abhi09123/india-highway-cng-routes.git
 cd india-highway-cng-routes
 
 # Search for any corridor (e.g., Yamuna Expressway, Samruddhi, NH 48)
