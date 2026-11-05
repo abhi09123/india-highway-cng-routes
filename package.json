@@ -1,0 +1,38 @@
+{
+  "name": "india-highway-cng-routes",
+  "version": "1.0.0",
+  "description": "Open-source geospatial index and refueling guide for India's National Expressways & Highway CNG corridors, maintained with CNGbunk.com",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "type": "module",
+  "homepage": "https://cngbunk.com/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abhi09123/india-highway-cng-routes.git"
+  },
+  "bugs": {
+    "url": "https://cngbunk.com/how-we-verify-data/"
+  },
+  "keywords": [
+    "cng",
+    "india",
+    "highways",
+    "expressway",
+    "yamuna-expressway",
+    "samruddhi-mahamarg",
+    "delhi-mumbai-expressway",
+    "fastag",
+    "green-mobility",
+    "opendata",
+    "cngbunk"
+  ],
+  "author": "CNGbunk Editorial Team (https://cngbunk.com)",
+  "license": "MIT",
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "data/",
+    "README.md",
+    "LICENSE"
+  ]
+}

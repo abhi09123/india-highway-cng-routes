@@ -1,5 +1,6 @@
 # 🛣️ India Highway CNG Corridors & Expressway Refueling Index
 
+[![npm version](https://img.shields.io/npm/v/india-highway-cng-routes.svg)](https://www.npmjs.com/package/india-highway-cng-routes)
 [![License: MIT](https://img.shields.io/badge/License-MIT-emerald.svg)](LICENSE)
 [![Data Status](https://img.shields.io/badge/Data-Verified%202026-blue.svg)](https://cngbunk.com/)
 [![Coverage](https://img.shields.io/badge/Coverage-38%20National%20Corridors-orange.svg)](https://cngbunk.com/routes/)
@@ -68,7 +69,27 @@ This repository provides open metadata for developers, researchers, and road tri
 
 ## ⚡ Quick Start & Programmatic Usage
 
-### Python 3
+### npm Package (Node.js & TypeScript)
+
+Install the package directly into any modern JavaScript or TypeScript project:
+
+```bash
+npm install india-highway-cng-routes
+```
+
+```javascript
+import { findCorridor, getCorridorUrl, getLivePriceUrl } from 'india-highway-cng-routes';
+
+// 1. Query expressways by name or route
+const results = findCorridor('yamuna');
+console.log(results[0].highway); // "Yamuna Expressway"
+console.log(getCorridorUrl(results[0].slug)); // "https://cngbunk.com/routes/yamuna-expressway/"
+
+// 2. Fetch live price tracker link
+console.log(getLivePriceUrl()); // "https://cngbunk.com/cng-price/"
+```
+
+### Python 3 (CLI / Standalone)
 
 ```bash
 # Clone the repository
@@ -87,7 +108,7 @@ python3 examples/lookup_highway.py yamuna
    Interactive Milestone Map: https://cngbunk.com/routes/yamuna-expressway/
 ```
 
-### Node.js
+### Local Node.js Script
 
 ```bash
 node examples/lookup_highway.js samruddhi
