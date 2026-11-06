@@ -5,6 +5,10 @@
   "main": "index.js",
   "types": "index.d.ts",
   "type": "module",
+  "scripts": {
+    "build:docs": "node scripts/build_docs.cjs",
+    "export:csv": "node scripts/export_csv.js"
+  },
   "homepage": "https://cngbunk.com/",
   "repository": {
     "type": "git",

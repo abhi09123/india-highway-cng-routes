@@ -1,6 +1,7 @@
 # 🛣️ India Highway CNG Corridors & Expressway Refueling Index
 
 [![npm version](https://img.shields.io/npm/v/india-highway-cng-routes.svg)](https://www.npmjs.com/package/india-highway-cng-routes)
+[![Web Portal](https://img.shields.io/badge/Web%20Portal-GitHub%20Pages-2563eb.svg)](https://abhi09123.github.io/india-highway-cng-routes/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-emerald.svg)](LICENSE)
 [![Data Status](https://img.shields.io/badge/Data-Verified%202026-blue.svg)](https://cngbunk.com/)
 [![Coverage](https://img.shields.io/badge/Coverage-38%20National%20Corridors-orange.svg)](https://cngbunk.com/routes/)
@@ -8,6 +9,7 @@
 
 An open-source reference guide, geospatial index, and corridor summary of **Automotive Compressed Natural Gas (CNG)** refueling infrastructure along India's major **National Expressways, Greenfields, and Golden Quadrilateral Highways**.
 
+🌐 **Interactive Web Portal:** [https://abhi09123.github.io/india-highway-cng-routes/](https://abhi09123.github.io/india-highway-cng-routes/)  
 Maintained in partnership with **[CNGbunk.com](https://cngbunk.com/)**, India's dedicated highway fuel and FASTag route planning platform.
 
 ---
@@ -54,12 +56,18 @@ This repository provides open metadata for developers, researchers, and road tri
 ## 📁 Repository Structure
 
 ```text
+├── docs/
+│   └── index.html                        # Interactive GitHub Pages transit portal & explorer
 ├── data/
 │   ├── major_highways_summary.json       # High-level metadata of 38 Indian expressways & highways
+│   ├── india_major_highways_cng_corridors.csv # Tabular CSV dataset for data science & GIS
 │   └── state_cng_pricing_baseline.json   # State-wise retail fuel baseline snapshot
 ├── examples/
 │   ├── lookup_highway.py                 # Python 3 script to search corridors & fetch map URLs
 │   └── lookup_highway.js                 # Node.js script to query highway corridors
+├── scripts/
+│   ├── build_docs.cjs                    # HTML static site generator for GitHub Pages
+│   └── export_csv.js                     # CSV export script
 ├── CONTRIBUTING.md                       # Contribution guidelines
 ├── LICENSE                              # MIT License
 └── README.md                             # Project documentation

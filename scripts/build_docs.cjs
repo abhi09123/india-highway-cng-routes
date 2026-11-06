@@ -1,0 +1,1044 @@
+const fs = require('fs');
+const path = require('path');
+
+const corridors = require('../data/major_highways_summary.json');
+const pricing = require('../data/state_cng_pricing_baseline.json');
+
+// Categorize corridor for filter pills
+function getCategory(h) {
+  const name = (h.highway + ' ' + h.slug).toLowerCase();
+  if (name.includes('expressway') || name.includes('ne-') || name.includes('ne1') || name.includes('ne4') || name.includes('mthl') || name.includes('coastal')) {
+    return 'expressway';
+  }
+  return 'nh';
+}
+
+function getRegion(h) {
+  const text = (h.from + ' ' + h.to + ' ' + h.highway).toLowerCase();
+  if (text.includes('mumbai') || text.includes('pune') || text.includes('ahmedabad') || text.includes('vadodara') || text.includes('gujarat') || text.includes('nashik') || text.includes('kolhapur') || text.includes('rajkot') || text.includes('goa') || text.includes('solapur') || text.includes('dwarka') || text.includes('porbandar')) {
+    return 'west';
+  }
+  if (text.includes('delhi') || text.includes('noida') || text.includes('gurugram') || text.includes('lucknow') || text.includes('agra') || text.includes('meerut') || text.includes('prayagraj') || text.includes('jaipur') || text.includes('chandigarh') || text.includes('dehradun') || text.includes('kanpur') || text.includes('katra') || text.includes('ambala')) {
+    return 'north';
+  }
+  if (text.includes('bengaluru') || text.includes('chennai') || text.includes('hyderabad') || text.includes('mysuru') || text.includes('vijayawada') || text.includes('puducherry') || text.includes('warangal')) {
+    return 'south';
+  }
+  return 'central';
+}
+
+const tableRows = corridors.map((c, i) => {
+  const cat = getCategory(c);
+  const region = getRegion(c);
+  return `        <tr data-category="${cat}" data-region="${region}" data-search="${c.highway.toLowerCase()} ${c.from.toLowerCase()} ${c.to.toLowerCase()}">
+          <th scope="row" data-label="Corridor Name">
+            <span class="corridor-title">${c.highway}</span>
+            <span class="badge badge-${cat}">${cat === 'expressway' ? 'Expressway' : 'National Highway'}</span>
+          </th>
+          <td data-label="Route Endpoints">
+            <div class="route-endpoints">
+              <span class="city origin">${c.from}</span>
+              <span class="arrow">➔</span>
+              <span class="city destination">${c.to}</span>
+            </div>
+          </td>
+          <td data-label="Length">
+            <span class="distance-badge">${c.distance_km} km</span>
+          </td>
+          <td data-label="Refueling Guidance">
+            <span class="guidance-text">Operational forecourts along access points</span>
+          </td>
+          <td data-label="CNGbunk Live Directory">
+            <a href="${c.interactive_map_url}" target="_blank" rel="noopener" class="btn-route" aria-label="View live ${c.highway} CNG stations on CNGbunk">
+              <span>Live Pump Finder</span>
+              <span class="arrow-icon">↗</span>
+            </a>
+          </td>
+        </tr>`;
+}).join('\n');
+
+const stateCards = Object.entries(pricing.states).map(([state, price]) => {
+  const formattedState = state.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+  return `        <div class="pricing-card">
+          <div class="state-name">${formattedState}</div>
+          <div class="state-price">${price}</div>
+          <div class="state-meta">Baseline Benchmark</div>
+        </div>`;
+}).join('\n');
+
+const htmlContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>India National Highway CNG Corridor Index (2026) | Open Transit Directory</title>
+  <meta name="description" content="Open-source index of 38 major Indian national highways, expressways, and inter-city CNG refueling corridors. Verified distance metrics and transit data powered by CNGbunk.com.">
+  <link rel="canonical" href="https://abhi09123.github.io/india-highway-cng-routes/">
+  
+  <!-- Open Graph / Meta -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="India National Highway CNG Corridor Index (2026)">
+  <meta property="og:description" content="Open-source mobility dataset and route explorer for 38 major Indian expressways and national highway CNG networks.">
+  <meta property="og:url" content="https://abhi09123.github.io/india-highway-cng-routes/">
+  
+  <!-- Structured Data JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://abhi09123.github.io/india-highway-cng-routes/#website",
+        "url": "https://abhi09123.github.io/india-highway-cng-routes/",
+        "name": "India National Highway CNG Corridor Index",
+        "description": "Open mobility developer registry and transit distance baseline for Indian national highway CNG corridors.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "CNGbunk",
+          "url": "https://cngbunk.com/"
+        }
+      },
+      {
+        "@type": "Dataset",
+        "@id": "https://abhi09123.github.io/india-highway-cng-routes/#dataset",
+        "name": "India Major Highway CNG Corridors Dataset",
+        "description": "Tabular index of 38 access-controlled expressways and national highway corridors in India with terminal cities, distances, and refueling links.",
+        "license": "https://opensource.org/licenses/MIT",
+        "isAccessibleForFree": true,
+        "creator": {
+          "@type": "Organization",
+          "name": "CNGbunk",
+          "url": "https://cngbunk.com/"
+        },
+        "distribution": [
+          {
+            "@type": "DataDownload",
+            "encodingFormat": "text/csv",
+            "contentUrl": "https://raw.githubusercontent.com/abhi09123/india-highway-cng-routes/main/data/india_major_highways_cng_corridors.csv"
+          },
+          {
+            "@type": "DataDownload",
+            "encodingFormat": "application/json",
+            "contentUrl": "https://raw.githubusercontent.com/abhi09123/india-highway-cng-routes/main/data/major_highways_summary.json"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --surface: #111827;
+      --surface-elevated: #1f2937;
+      --border: #374151;
+      --border-subtle: #242f42;
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+      --primary: #10b981;
+      --primary-hover: #059669;
+      --primary-soft: rgba(16, 185, 129, 0.12);
+      --accent-blue: #3b82f6;
+      --accent-purple: #8b5cf6;
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: var(--font);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 80px;
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    a:hover {
+      color: #34d399;
+    }
+
+    /* Container */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Header Nav */
+    header {
+      border-bottom: 1px solid var(--border-subtle);
+      background: rgba(17, 24, 39, 0.85);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--text-main);
+    }
+
+    .brand-badge {
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-main);
+    }
+
+    .nav-btn {
+      background: var(--primary);
+      color: #062419 !important;
+      font-weight: 600 !important;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: background 0.15s ease;
+    }
+
+    .nav-btn:hover {
+      background: #34d399;
+      color: #062419 !important;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 56px 0 36px 0;
+      text-align: center;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: var(--primary);
+      background: var(--primary-soft);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      padding: 4px 14px;
+      border-radius: 9999px;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .hero p {
+      font-size: 1.125rem;
+      color: var(--text-muted);
+      max-width: 780px;
+      margin: 0 auto 28px auto;
+    }
+
+    .hero-badges {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .hero-stat {
+      background: var(--surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 10px 18px;
+      text-align: left;
+    }
+
+    .hero-stat-num {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .hero-stat-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Authority notice */
+    .regulatory-bar {
+      background: rgba(31, 41, 55, 0.5);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 14px 20px;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+
+    .regulatory-links {
+      display: flex;
+      gap: 16px;
+    }
+
+    .regulatory-links a {
+      color: var(--text-muted);
+      font-size: 0.825rem;
+      text-decoration: underline;
+    }
+
+    .regulatory-links a:hover {
+      color: var(--text-main);
+    }
+
+    /* Search & Filter Controls */
+    .controls-wrapper {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0 16px;
+      height: 48px;
+    }
+
+    .search-box svg {
+      width: 20px;
+      height: 20px;
+      color: var(--text-muted);
+      margin-right: 12px;
+      flex-shrink: 0;
+    }
+
+    .search-input {
+      background: transparent;
+      border: none;
+      color: var(--text-main);
+      font-size: 1rem;
+      width: 100%;
+      outline: none;
+    }
+
+    .search-input::placeholder {
+      color: #6b7280;
+    }
+
+    .filters-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .pill-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill {
+      background: var(--surface-elevated);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 0.825rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .pill:hover {
+      color: var(--text-main);
+      border-color: #6b7280;
+    }
+
+    .pill.active {
+      background: var(--primary-soft);
+      color: var(--primary);
+      border-color: var(--primary);
+      font-weight: 600;
+    }
+
+    .count-indicator {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    /* Responsive Table - Following modern-web-guidance responsive-table */
+    .table-wrapper {
+      overflow: auto;
+      max-inline-size: 100%;
+      container-type: inline-size;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      text-align: left;
+      font-size: 0.925rem;
+    }
+
+    caption {
+      text-align: left;
+      padding: 16px 20px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-main);
+      border-bottom: 1px solid var(--border);
+      background: rgba(17, 24, 39, 0.5);
+    }
+
+    thead {
+      position: sticky;
+      inset-block-start: 0;
+      z-index: 10;
+      background: var(--surface-elevated);
+    }
+
+    th, td {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-subtle);
+      vertical-align: middle;
+    }
+
+    thead th {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border);
+    }
+
+    tbody tr:hover {
+      background: rgba(31, 41, 55, 0.4);
+    }
+
+    tbody th {
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .corridor-title {
+      display: block;
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .badge-expressway {
+      background: rgba(59, 130, 246, 0.15);
+      color: #60a5fa;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+
+    .badge-nh {
+      background: rgba(139, 92, 246, 0.15);
+      color: #a78bfa;
+      border: 1px solid rgba(139, 92, 246, 0.3);
+    }
+
+    .route-endpoints {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+    }
+
+    .route-endpoints .city {
+      color: #e5e7eb;
+    }
+
+    .route-endpoints .arrow {
+      color: var(--primary);
+      font-weight: bold;
+    }
+
+    .distance-badge {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-weight: 600;
+      color: #34d399;
+      background: rgba(16, 185, 129, 0.1);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+    }
+
+    .guidance-text {
+      color: var(--text-muted);
+      font-size: 0.825rem;
+    }
+
+    .btn-route {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--surface-elevated);
+      color: var(--text-main);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 0.825rem;
+      font-weight: 600;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .btn-route:hover {
+      background: var(--primary);
+      color: #062419;
+      border-color: var(--primary);
+    }
+
+    .btn-route .arrow-icon {
+      font-size: 1rem;
+      line-height: 1;
+    }
+
+    /* Container Query for Responsive Card Layout (< 720px) */
+    @container (width < 720px) {
+      table, thead, tbody, tr, th, td {
+        display: block;
+      }
+
+      thead {
+        display: none;
+      }
+
+      tr {
+        margin: 12px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: var(--surface-elevated);
+        padding: 8px 12px;
+      }
+
+      th, td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 6px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      th[scope="row"] {
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 10px;
+        margin-bottom: 6px;
+      }
+
+      td:last-child {
+        border-bottom: none;
+        padding-top: 12px;
+        justify-content: flex-end;
+      }
+
+      td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        margin-right: 12px;
+      }
+    }
+
+    /* State Pricing Grid Section */
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 48px 0 12px 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-desc {
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      font-size: 0.95rem;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .pricing-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      transition: border-color 0.15s ease;
+    }
+
+    .pricing-card:hover {
+      border-color: #4b5563;
+    }
+
+    .state-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .state-price {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+
+    .state-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .pricing-banner {
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: 12px;
+      padding: 18px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .pricing-banner-text {
+      color: #d1fae5;
+      font-size: 0.925rem;
+    }
+
+    /* Developer Quickstart */
+    .code-block-wrapper {
+      background: #0d1117;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.9rem;
+      overflow-x: auto;
+      margin-bottom: 20px;
+    }
+
+    .code-comment {
+      color: #8b949e;
+    }
+
+    .code-keyword {
+      color: #ff7b72;
+    }
+
+    .code-string {
+      color: #a5d6ff;
+    }
+
+    .code-fn {
+      color: #d2a8ff;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-subtle);
+      margin-top: 60px;
+      padding-top: 40px;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 32px;
+      margin-bottom: 40px;
+    }
+
+    .footer-col h4 {
+      color: var(--text-main);
+      font-size: 0.95rem;
+      margin-bottom: 14px;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-col a {
+      color: var(--text-muted);
+    }
+
+    .footer-col a:hover {
+      color: var(--primary);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Navigation -->
+  <header>
+    <div class="container nav-inner">
+      <div class="brand">
+        <span>🇮🇳 India Highway CNG Routes</span>
+        <span class="brand-badge">v1.0.1</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="https://cngbunk.com/routes/" target="_blank" rel="noopener">Interactive Routes Hub</a></li>
+        <li><a href="https://cngbunk.com/cng-price/" target="_blank" rel="noopener">Daily Fuel Prices</a></li>
+        <li><a href="https://www.npmjs.com/package/india-highway-cng-routes" target="_blank" rel="noopener">npm Registry</a></li>
+        <li><a href="https://github.com/abhi09123/india-highway-cng-routes" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="https://cngbunk.com/" target="_blank" rel="noopener" class="nav-btn">CNGbunk.com ↗</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="container">
+    
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-eyebrow">
+        <span>⚡</span> Open Transit Data Specification for India
+      </div>
+      <h1>National Highway CNG Corridor Index</h1>
+      <p>
+        The definitive open-source registry of 38 verified inter-city expressways and national highway corridors in India. Maintained for developers, fleet operators, and long-distance alternative fuel travelers.
+      </p>
+
+      <div class="hero-badges">
+        <div class="hero-stat">
+          <div class="hero-stat-num">38</div>
+          <div class="hero-stat-label">Major Corridors</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">12,400+</div>
+          <div class="hero-stat-label">Expressway Kilometers</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">14 States</div>
+          <div class="hero-stat-label">Interstate Transit Coverage</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">100% Free</div>
+          <div class="hero-stat-label">MIT Open Source</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Regulatory Citations -->
+    <div class="regulatory-bar">
+      <div>
+        <strong>Statutory Compliance & Regulatory Data:</strong> Verified under statutory rules for compressed natural gas distribution in India.
+      </div>
+      <div class="regulatory-links">
+        <a href="https://pngrb.gov.in" target="_blank" rel="noopener">PNGRB CGD Guidelines</a>
+        <a href="https://peso.gov.in" target="_blank" rel="noopener">PESO Cylinder Safety (Rule 35)</a>
+        <a href="https://mopng.gov.in" target="_blank" rel="noopener">MoPNG Policy Updates</a>
+      </div>
+    </div>
+
+    <!-- Search & Filter Controls -->
+    <div class="controls-wrapper">
+      <div class="search-box">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+        <input type="text" id="routeSearch" class="search-input" placeholder="Search expressway, national highway, or city (e.g. Samruddhi, Agra, Pune, NH 48)..." aria-label="Search CNG highway corridors">
+      </div>
+      <div class="filters-bar">
+        <div class="pill-group" role="radiogroup" aria-label="Corridor Type Filters">
+          <button class="pill active" data-filter="all">All Corridors (38)</button>
+          <button class="pill" data-filter="expressway">Expressways (NE)</button>
+          <button class="pill" data-filter="nh">National Highways (NH)</button>
+          <button class="pill" data-filter="north">Northern Corridors</button>
+          <button class="pill" data-filter="west">Western Corridors</button>
+          <button class="pill" data-filter="south">Southern Corridors</button>
+        </div>
+        <div id="resultsCount" class="count-indicator">Showing 38 corridors</div>
+      </div>
+    </div>
+
+    <!-- Responsive Table with Container Queries (per modern-web-guidance) -->
+    <div tabindex="0" role="region" aria-labelledby="corridors-table-caption" class="table-wrapper">
+      <table id="corridorsTable">
+        <caption id="corridors-table-caption">National Highway & Expressway CNG Refueling Corridors</caption>
+        <thead>
+          <tr>
+            <th scope="col">Corridor Name</th>
+            <th scope="col">Terminal Endpoints</th>
+            <th scope="col">Length</th>
+            <th scope="col">Refueling Guidance</th>
+            <th scope="col">Station Directory</th>
+          </tr>
+        </thead>
+        <tbody id="corridorsBody">
+${tableRows}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- State Pricing Baseline Section -->
+    <h2 class="section-title">
+      <span>⛽</span> State-Wise CNG Retail Price Benchmark
+    </h2>
+    <p class="section-desc">
+      Static monthly baseline retail prices across primary Indian gas distribution zones. Prices vary across municipal boundaries based on state VAT and local pipeline transport tariffs.
+    </p>
+
+    <div class="pricing-grid">
+${stateCards}
+    </div>
+
+    <div class="pricing-banner">
+      <div class="pricing-banner-text">
+        <strong>Need Live Forecourt Prices & Daily Tariff Revisions?</strong> Check real-time per-kilogram rates across 150+ Indian cities and licensed City Gas Distribution (CGD) entities.
+      </div>
+      <a href="https://cngbunk.com/cng-price/" target="_blank" rel="noopener" class="nav-btn">
+        View Live City-Wise Rates ↗
+      </a>
+    </div>
+
+    <!-- Developer SDK Section -->
+    <h2 class="section-title">
+      <span>💻</span> Developer SDK & Open Data API
+    </h2>
+    <p class="section-desc">
+      Incorporate Indian alternative fuel highway corridor metadata directly into your Node.js, TypeScript, Python, or GIS applications.
+    </p>
+
+    <div class="code-block-wrapper">
+<span class="code-comment"># Install via npm registry</span>
+npm install india-highway-cng-routes
+
+<span class="code-comment">// Node.js / ES Module Usage</span>
+<span class="code-keyword">const</span> { getCorridors, findRoute } = <span class="code-fn">require</span>(<span class="code-string">'india-highway-cng-routes'</span>);
+
+<span class="code-comment">// Query major transit route</span>
+<span class="code-keyword">const</span> route = <span class="code-fn">findRoute</span>(<span class="code-string">'Delhi'</span>, <span class="code-string">'Jaipur'</span>);
+console.<span class="code-fn">log</span>(route.highway); <span class="code-comment">// "NH 48"</span>
+console.<span class="code-fn">log</span>(route.interactive_map_url); <span class="code-comment">// "https://cngbunk.com/routes/delhi-jaipur-nh48/"</span>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4>India Highway CNG Routes</h4>
+          <p>
+            An open-access community transport initiative cataloging major Indian road transit corridors for alternative fuel vehicles.
+          </p>
+          <p style="margin-top: 10px;">
+            Licensed under the <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener">MIT License</a>.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Popular Route Forecourts</h4>
+          <ul>
+            <li><a href="https://cngbunk.com/routes/samruddhi-mahamarg/" target="_blank" rel="noopener">Samruddhi Mahamarg CNG Pumps</a></li>
+            <li><a href="https://cngbunk.com/routes/yamuna-expressway/" target="_blank" rel="noopener">Yamuna Expressway CNG Bunks</a></li>
+            <li><a href="https://cngbunk.com/routes/mumbai-pune-expressway/" target="_blank" rel="noopener">Mumbai-Pune Expressway CNG Stations</a></li>
+            <li><a href="https://cngbunk.com/routes/delhi-jaipur-nh48/" target="_blank" rel="noopener">Delhi-Jaipur NH 48 CNG Pumps</a></li>
+            <li><a href="https://cngbunk.com/routes/purvanchal-expressway/" target="_blank" rel="noopener">Purvanchal Expressway CNG Stations</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Mobility Utilities</h4>
+          <ul>
+            <li><a href="https://cngbunk.com/routes/" target="_blank" rel="noopener">All 38 Highway Corridors</a></li>
+            <li><a href="https://cngbunk.com/cng-price/" target="_blank" rel="noopener">Daily Retail CNG Prices</a></li>
+            <li><a href="https://cngbunk.com/calculators/petrol-vs-cng/" target="_blank" rel="noopener">Petrol vs CNG Running Cost Calculator</a></li>
+            <li><a href="https://cngbunk.com/tools/fastag-balance-check/" target="_blank" rel="noopener">FASTag Toll Balance Verification</a></li>
+            <li><a href="https://cngbunk.com/tools/cng-hydro-testing-calculator/" target="_blank" rel="noopener">Cylinder Hydro-Testing Calculator</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Authoritative Sources</h4>
+          <ul>
+            <li><a href="https://pngrb.gov.in" target="_blank" rel="noopener">Petroleum & Natural Gas Regulatory Board</a></li>
+            <li><a href="https://peso.gov.in" target="_blank" rel="noopener">Petroleum and Explosives Safety Organization</a></li>
+            <li><a href="https://mopng.gov.in" target="_blank" rel="noopener">Ministry of Petroleum and Natural Gas</a></li>
+            <li><a href="https://data.gov.in" target="_blank" rel="noopener">Open Government Data (OGD) Platform India</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          © 2026 India Highway CNG Corridors. Powered by <a href="https://cngbunk.com/" target="_blank" rel="noopener">CNGbunk.com</a>.
+        </div>
+        <div>
+          Data is provided for planning purposes. For live real-time station availability, visit CNGbunk.com.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Instant Search & Filter Logic -->
+  <script>
+    (function() {
+      const searchInput = document.getElementById('routeSearch');
+      const pills = document.querySelectorAll('.pill');
+      const tableBody = document.getElementById('corridorsBody');
+      const rows = tableBody.querySelectorAll('tr');
+      const countEl = document.getElementById('resultsCount');
+
+      let currentFilter = 'all';
+      let currentQuery = '';
+
+      function updateTable() {
+        let visibleCount = 0;
+        const q = currentQuery.trim().toLowerCase();
+
+        rows.forEach(row => {
+          const cat = row.getAttribute('data-category');
+          const region = row.getAttribute('data-region');
+          const searchText = row.getAttribute('data-search') || '';
+
+          // Check category filter
+          let matchesFilter = false;
+          if (currentFilter === 'all') {
+            matchesFilter = true;
+          } else if (currentFilter === 'expressway' || currentFilter === 'nh') {
+            matchesFilter = (cat === currentFilter);
+          } else {
+            // Regional filters (north, west, south)
+            matchesFilter = (region === currentFilter);
+          }
+
+          // Check text search
+          const matchesQuery = !q || searchText.includes(q);
+
+          if (matchesFilter && matchesQuery) {
+            row.style.display = '';
+            visibleCount++;
+          } else {
+            row.style.display = 'none';
+          }
+        });
+
+        countEl.textContent = 'Showing ' + visibleCount + ' of ' + rows.length + ' corridors';
+      }
+
+      if (searchInput) {
+        searchInput.addEventListener('input', function(e) {
+          currentQuery = e.target.value;
+          updateTable();
+        });
+      }
+
+      pills.forEach(pill => {
+        pill.addEventListener('click', function() {
+          pills.forEach(p => p.classList.remove('active'));
+          this.classList.add('active');
+          currentFilter = this.getAttribute('data-filter');
+          updateTable();
+        });
+      });
+    })();
+  </script>
+</body>
+</html>`;
+
+const docsDir = path.join(__dirname, '../docs');
+if (!fs.existsSync(docsDir)) {
+  fs.mkdirSync(docsDir, { recursive: true });
+}
+
+fs.writeFileSync(path.join(docsDir, 'index.html'), htmlContent, 'utf8');
+console.log('Successfully generated docs/index.html with', corridors.length, 'corridors!');
